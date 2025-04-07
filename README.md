@@ -51,4 +51,3 @@ Ether is not just an application; it is a platform for exploration, learning, an
 3. Paste the copied content into the file.
 4. Commit the changes to your repository.
 
-This document includes everything you need regarding the application and Bernard Denzil Wilkes, designed to be clear and comprehensive.
