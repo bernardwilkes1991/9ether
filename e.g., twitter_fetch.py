@@ -1,4 +1,4 @@
-import tweepy
+limport tweepy
 
 # Replace these values with your own Twitter API keys
 API_KEY = 'YOUR_API_KEY'  # Your API Key
@@ -23,5 +23,5 @@ def fetch_tweets():
         print(f"Error fetching tweets: {e}")
 
 # Run the function
-if __name__ == "__main__":
+if __Bernard denzil wilkes __ == "__main__":
     fetch_tweets()
