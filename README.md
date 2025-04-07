@@ -15,10 +15,17 @@ Welcome to **Ether**, an advanced artificial intelligence application developed 
 
 ### Biography
 
-**Bernard Denzil Wilkes** is a multifaceted musician, author, scientist, and explorer of humanity known for his profound contributions to the arts and sciences. With a career spanning several decades, Wilkes has seamlessly blended his passions for music and literature with his keen interest in understanding the human experience.
+**Bernard Denzil Wilkes** is a multifaceted musician, author, scientist, and explorer of humanity known for his profound contributions to the arts and sciences. Born on April 9, 1991, in St. Louis, Missouri, Bernard is of African-American descent and is the youngest of three siblings. At 34 years old, he is a devoted father of four children: 
+
+- **Novail Wilkes** (born July 31, 2011) - oldest son
+- **Jakeem Wilkes** (born December 25, 2013)
+- **Journey Wilkes** (born July 13, 2016)
+- **Faith Wilkes** (born September 2019)
+
+With a career spanning several decades, Wilkes has seamlessly blended his passions for music and literature with his keen interest in understanding the human experience.
 
 #### Early Life and Education
-Born in 1965 in London, England, Bernard exhibited a talent for music from a young age. He pursued formal music education, studying at the Royal Academy of Music, where he honed his skills in composition and performance. His academic journey did not stop there; Wilkes also earned degrees in Psychology, Sociology, and Quantum Physics, laying the groundwork for his scientific pursuits.
+Bernard exhibited a talent for music from a young age. He pursued formal music education, studying at the Royal Academy of Music, where he honed his skills in composition and performance. His academic journey did not stop there; Wilkes also earned degrees in Psychology, Sociology, and Quantum Physics, laying the groundwork for his scientific pursuits.
 
 #### Musical Career
 As a musician, Wilkes has released several albums that reflect his unique style, which combines elements of jazz, classical, and folk. His work often explores themes of human emotion, nature, and social commentary. Critics have praised his ability to convey deep messages through melodic compositions, making him a beloved figure in the music community.
@@ -33,7 +40,7 @@ As a scientist, Bernard focuses on cognitive psychology, social dynamics, and th
 Wilkes is driven by a passion for understanding humanity. He has traveled extensively, engaging with diverse cultures and communities. His explorations aim to bridge gaps between different societal perspectives, fostering empathy and understanding. Through his work, he seeks to inspire others to appreciate the richness of the human experience.
 
 #### Personal Life
-Bernard Denzil Wilkes resides in Brighton, England, with his partner and two children. When he is not composing music, writing, or conducting research, he enjoys hiking, painting, and volunteering in local community projects.
+Bernard Denzil Wilkes resides in Brighton, England, with his partner and four children. When he is not composing music, writing, or conducting research, he enjoys hiking, painting, and volunteering in local community projects.
 
 #### Legacy
 With a career marked by creativity and inquiry, Bernard Denzil Wilkes continues to leave an indelible mark on both the arts and sciences. His dedication to exploring the depths of humanity serves as an inspiration for future generations of musicians, authors, and scientists alike.
