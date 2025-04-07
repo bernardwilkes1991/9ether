@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Betting Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #betting-odds {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .odds {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sports Betting Application</h1>
+    <div id="betting-odds"></div>
+    <script>
+        const apiKey = 'YOUR_API_KEY'; // Replace with your API key
+        const apiUrl = 'https://api.example.com/sports/odds'; // Replace with the actual API URL
+
+        async function fetchBettingOdds() {
+            try {
+                const response = await fetch(apiUrl, {
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                displayOdds(data);
+            } catch (error) {
+                console.error('There has been a problem with your fetch operation:', error);
+            }
+        }
+
+        function displayOdds(data) {
+            const oddsContainer = document.getElementById('betting-odds');
+            oddsContainer.innerHTML = '';
+
+            data.odds.forEach(odd => {
+                const oddElement = document.createElement('div');
+                oddElement.classList.add('odds');
+                oddElement.innerHTML = `<strong>${odd.event}</strong>: ${odd.value}`;
+                oddsContainer.appendChild(oddElement);
+            });
+        }
+
+        // Fetch the odds when the page loads
+        fetchBettingOdds();
+    </script>
+</body>
+</html>
