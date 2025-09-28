@@ -3,22 +3,22 @@ import { Github, Twitter } from "lucide-react"
 export const defaultLanguage: string = "en"
 
 export const common = {
-  domain: "https://astro-air.guoqi.dev",
+  domain: "https://9ether.bernardwilkes.dev",
   meta: {
     favicon: "/avatar.png",
-    url: "https://blog.sunguoqi.com",
+    url: "https://9ether.bernardwilkes.dev",
   },
   googleAnalyticsId: "",
   social: [
     {
       icon: Twitter,
       label: "X",
-      link: "https://x.com/sun0225SUN",
+      link: "https://x.com/bernardwilkes91",
     },
     {
       icon: Github,
       label: "GitHub",
-      link: "https://github.com/sun0225SUN",
+      link: "https://github.com/bernardwilkes1991",
     },
   ],
   rss: true,
@@ -27,8 +27,16 @@ export const common = {
     archive: true,
     custom: [
       {
-        label: "CamLife",
-        link: "https://camlife.cn",
+        label: "AI Chat",
+        link: "/en/ai-chat",
+      },
+      {
+        label: "Journal",
+        link: "/en/journal",
+      },
+      {
+        label: "Science",
+        link: "/en/science",
       },
     ],
     links: true,
@@ -47,36 +55,44 @@ export const common = {
 
 export const zh = {
   ...common,
-  siteName: "小孙同学",
+  siteName: "九醚",
   meta: {
     ...common.meta,
-    title: "小孙同学",
-    slogan: "一个浪漫的理性主义者",
-    description: "读书、摄影、编程、旅行",
+    title: "九醚",
+    slogan: "终极人工智能应用",
+    description: "科学、艺术与技术的融合平台",
   },
   navigation: {
     ...common.navigation,
     custom: [
       {
-        label: "影集",
-        link: "https://camlife.cn",
+        label: "AI对话",
+        link: "/zh/ai-chat",
+      },
+      {
+        label: "日记",
+        link: "/zh/journal",
+      },
+      {
+        label: "科学",
+        link: "/zh/science",
       },
     ],
   },
   pageMeta: {
     archive: {
-      title: "归档",
-      description: "小孙同学的所有文章",
+      title: "档案",
+      description: "Ether社区的所有文章和讨论",
       ogImage: "/images/page-meta/zh/archive.png",
     },
     links: {
-      title: "朋友们",
-      description: "小孙同学的和他朋友们",
+      title: "社区链接",
+      description: "Ether社区伙伴和资源",
       ogImage: "/images/page-meta/zh/links.png",
     },
     about: {
-      title: "关于我",
-      description: "小孙同学的自我介绍",
+      title: "关于伯纳德",
+      description: "Bernard Denzil Wilkes和Ether的故事",
       ogImage: "/images/page-meta/zh/about.png",
     },
   },
@@ -84,36 +100,44 @@ export const zh = {
 
 export const en = {
   ...common,
-  siteName: "Guoqi Sun",
+  siteName: "Ether",
   meta: {
     ...common.meta,
-    title: "Guoqi Sun",
-    slogan: "A Romantic Rationalist",
-    description: "Reading, Photography, Programming, Traveling",
+    title: "Ether - The Ultimate AI Application",
+    slogan: "Merging Science, Art, and Technology",
+    description: "Real-time AI answers, personal journaling, and quantum physics exploration",
   },
   navigation: {
     ...common.navigation,
     custom: [
       {
-        label: "CamLife",
-        link: "https://camlife.cn",
+        label: "AI Chat",
+        link: "/en/ai-chat",
+      },
+      {
+        label: "Journal",
+        link: "/en/journal",
+      },
+      {
+        label: "Science",
+        link: "/en/science",
       },
     ],
   },
   pageMeta: {
     archive: {
-      title: "All Posts",
-      description: "Here are Guoqi Sun's all posts",
+      title: "Community Archive",
+      description: "All posts and discussions in the Ether community",
       ogImage: "/images/page-meta/en/archive.png",
     },
     links: {
-      title: "My Friends",
-      description: "Here are Guoqi Sun's friends",
+      title: "Community Links",
+      description: "Ether community partners and resources",
       ogImage: "/images/page-meta/en/links.png",
     },
     about: {
-      title: "About Me",
-      description: "Here is Guoqi Sun's self-introduction",
+      title: "About Bernard",
+      description: "The story of Bernard Denzil Wilkes and Ether",
       ogImage: "/images/page-meta/en/about.png",
     },
   },

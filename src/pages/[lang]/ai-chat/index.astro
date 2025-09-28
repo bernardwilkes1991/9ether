@@ -1,0 +1,199 @@
+---
+import MainLayout from "~/layouts/main.astro"
+import { getLanguagePaths } from "~/utils/langs"
+
+export function getStaticPaths() {
+  return getLanguagePaths()
+}
+
+const lang = Astro.params.lang as string
+---
+
+<MainLayout title={lang === "zh" ? "AI对话" : "AI Chat"} description={lang === "zh" ? "与Ether AI进行实时对话" : "Real-time conversations with Ether AI"}>
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8 text-center">
+      {lang === "zh" ? "🤖 AI 智能对话" : "🤖 AI Chat Interface"}
+    </h1>
+    
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
+      <div class="text-center mb-6">
+        <p class="text-gray-600 dark:text-gray-400">
+          {lang === "zh" 
+            ? "欢迎使用Ether AI！我可以帮您回答问题、探讨科学概念，或进行深度对话。" 
+            : "Welcome to Ether AI! I can help answer questions, explore scientific concepts, or engage in deep conversations."
+          }
+        </p>
+      </div>
+      
+      <div id="chat-container" class="min-h-[400px] max-h-[600px] overflow-y-auto border rounded-lg p-4 mb-4 bg-gray-50 dark:bg-gray-900">
+        <div class="space-y-4">
+          <div class="flex items-start space-x-3">
+            <div class="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+              AI
+            </div>
+            <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-lg max-w-md">
+              <p class="text-sm">
+                {lang === "zh" 
+                  ? "您好！我是Ether AI。请问今天我可以为您做些什么？您可以问我关于科学、量子物理、人工智能或任何您感兴趣的话题。" 
+                  : "Hello! I'm Ether AI. How can I assist you today? You can ask me about science, quantum physics, AI, or any topic that interests you."
+                }
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="flex space-x-2">
+        <input 
+          type="text" 
+          id="chat-input"
+          placeholder={lang === "zh" ? "在此输入您的问题..." : "Type your question here..."}
+          class="flex-1 p-3 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          onkeypress="if(event.key==='Enter') sendMessage()"
+        />
+        <button 
+          onclick="sendMessage()"
+          class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+        >
+          {lang === "zh" ? "发送" : "Send"}
+        </button>
+      </div>
+    </div>
+    
+    <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+      <h2 class="text-xl font-semibold mb-4">
+        {lang === "zh" ? "🔬 探索主题" : "🔬 Explore Topics"}
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="space-y-2">
+          <button onclick="askQuestion('quantum-physics')" class="w-full text-left p-3 bg-white dark:bg-gray-800 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+            <div class="font-medium">{lang === "zh" ? "量子物理学" : "Quantum Physics"}</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">
+              {lang === "zh" ? "探索量子力学的奥秘" : "Explore quantum mechanics mysteries"}
+            </div>
+          </button>
+          <button onclick="askQuestion('ai-consciousness')" class="w-full text-left p-3 bg-white dark:bg-gray-800 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+            <div class="font-medium">{lang === "zh" ? "AI与意识" : "AI & Consciousness"}</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">
+              {lang === "zh" ? "人工智能的哲学思考" : "Philosophical aspects of AI"}
+            </div>
+          </button>
+        </div>
+        <div class="space-y-2">
+          <button onclick="askQuestion('human-behavior')" class="w-full text-left p-3 bg-white dark:bg-gray-800 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+            <div class="font-medium">{lang === "zh" ? "人类行为学" : "Human Behavior"}</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">
+              {lang === "zh" ? "理解人性与社会动力学" : "Understanding human nature & social dynamics"}
+            </div>
+          </button>
+          <button onclick="askQuestion('music-science')" class="w-full text-left p-3 bg-white dark:bg-gray-800 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+            <div class="font-medium">{lang === "zh" ? "音乐与科学" : "Music & Science"}</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">
+              {lang === "zh" ? "音乐中的数学与物理" : "Mathematics & physics in music"}
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</MainLayout>
+
+<script>
+  let chatContainer;
+  let chatInput;
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    chatContainer = document.getElementById('chat-container');
+    chatInput = document.getElementById('chat-input');
+  });
+
+  function sendMessage() {
+    const input = chatInput;
+    const message = input.value.trim();
+    
+    if (!message) return;
+    
+    // Add user message
+    addMessage(message, 'user');
+    input.value = '';
+    
+    // Simulate AI response (in a real app, this would call an AI API)
+    setTimeout(() => {
+      const responses = {
+        en: [
+          "That's a fascinating question! Based on my understanding of quantum physics and human behavior patterns, I'd say...",
+          "Interesting perspective! From Bernard's research in cognitive psychology and quantum mechanics...",
+          "Great question! This touches on some fundamental concepts in both science and philosophy...",
+          "I appreciate your curiosity! This relates to some of the core themes Bernard explores in his work..."
+        ],
+        zh: [
+          "这是一个很有趣的问题！根据我对量子物理学和人类行为模式的理解...",
+          "很有意思的观点！根据伯纳德在认知心理学和量子力学方面的研究...",
+          "好问题！这涉及到科学和哲学的一些基本概念...",
+          "我很欣赏您的好奇心！这与伯纳德在其作品中探索的一些核心主题相关..."
+        ]
+      };
+      
+      const lang = document.documentElement.lang || 'en';
+      const langResponses = responses[lang] || responses.en;
+      const response = langResponses[Math.floor(Math.random() * langResponses.length)];
+      
+      addMessage(response, 'ai');
+    }, 1000);
+  }
+  
+  function addMessage(message, sender) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'flex items-start space-x-3';
+    
+    if (sender === 'user') {
+      messageDiv.innerHTML = `
+        <div class="bg-gray-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+          U
+        </div>
+        <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg max-w-md">
+          <p class="text-sm">${message}</p>
+        </div>
+      `;
+    } else {
+      messageDiv.innerHTML = `
+        <div class="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+          AI
+        </div>
+        <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-lg max-w-md">
+          <p class="text-sm">${message}</p>
+        </div>
+      `;
+    }
+    
+    chatContainer.appendChild(messageDiv);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  }
+  
+  function askQuestion(topic) {
+    const questions = {
+      'quantum-physics': {
+        en: "Can you explain quantum entanglement and its implications for our understanding of reality?",
+        zh: "您能解释一下量子纠缠及其对我们理解现实的意义吗？"
+      },
+      'ai-consciousness': {
+        en: "What are your thoughts on artificial consciousness and the possibility of machines developing true awareness?",
+        zh: "您对人工意识和机器发展真正意识的可能性有什么看法？"
+      },
+      'human-behavior': {
+        en: "How do social dynamics and individual psychology interact to shape human behavior?",
+        zh: "社会动力学和个体心理学如何相互作用来塑造人类行为？"
+      },
+      'music-science': {
+        en: "What is the relationship between mathematical patterns in music and our emotional responses?",
+        zh: "音乐中的数学模式与我们的情感反应之间有什么关系？"
+      }
+    };
+    
+    const lang = document.documentElement.lang || 'en';
+    const question = questions[topic][lang] || questions[topic].en;
+    
+    chatInput.value = question;
+    sendMessage();
+  }
+</script>
