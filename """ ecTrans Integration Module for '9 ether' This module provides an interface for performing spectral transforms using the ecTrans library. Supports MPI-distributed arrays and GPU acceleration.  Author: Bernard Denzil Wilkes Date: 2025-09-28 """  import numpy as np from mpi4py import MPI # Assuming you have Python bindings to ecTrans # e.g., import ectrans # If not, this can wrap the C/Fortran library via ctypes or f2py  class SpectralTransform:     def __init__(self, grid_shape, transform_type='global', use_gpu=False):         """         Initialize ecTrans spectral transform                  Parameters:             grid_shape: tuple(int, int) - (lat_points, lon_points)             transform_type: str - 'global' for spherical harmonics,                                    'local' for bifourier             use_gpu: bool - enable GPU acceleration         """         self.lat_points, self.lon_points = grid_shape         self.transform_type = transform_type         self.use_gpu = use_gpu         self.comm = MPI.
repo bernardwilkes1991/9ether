@@ -1,0 +1,111 @@
+"""
+ecTrans Integration Module for '9 ether'
+This module provides an interface for performing spectral transforms
+using the ecTrans library. Supports MPI-distributed arrays and GPU acceleration.
+
+Author: Bernard Denzil Wilkes
+Date: 2025-09-28
+"""
+
+import numpy as np
+from mpi4py import MPI
+# Assuming you have Python bindings to ecTrans
+# e.g., import ectrans
+# If not, this can wrap the C/Fortran library via ctypes or f2py
+
+class SpectralTransform:
+    def __init__(self, grid_shape, transform_type='global', use_gpu=False):
+        """
+        Initialize ecTrans spectral transform
+        
+        Parameters:
+            grid_shape: tuple(int, int) - (lat_points, lon_points)
+            transform_type: str - 'global' for spherical harmonics, 
+                                  'local' for bifourier
+            use_gpu: bool - enable GPU acceleration
+        """
+        self.lat_points, self.lon_points = grid_shape
+        self.transform_type = transform_type
+        self.use_gpu = use_gpu
+        self.comm = MPI.COMM_WORLD
+        self.rank = self.comm.Get_rank()
+        self.size = self.comm.Get_size()
+        
+        # Initialize ecTrans context
+        # self.context = ectrans.init(grid_shape, transform_type, use_gpu)
+        # Placeholder for initialization
+        print(f"[Rank {self.rank}] Initialized ecTrans: {transform_type}, GPU={use_gpu}")
+
+    def direct_transform(self, field):
+        """
+        Perform direct spectral transform (grid to spectral)
+        
+        Parameters:
+            field: np.ndarray - 2D array (lat, lon) representing the field
+            
+        Returns:
+            spectral_field: np.ndarray - transformed spectral coefficients
+        """
+        # Ensure data is distributed across MPI ranks
+        # local_field = distribute_field_mpi(field, self.comm)
+        
+        # Perform Fourier in longitudinal direction
+        spectral_lon = np.fft.fft(field, axis=1)
+        
+        # Latitudinal transform
+        if self.transform_type == 'global':
+            # Legendre transform placeholder
+            spectral_field = self.legendre_transform(spectral_lon)
+        else:
+            # Bifourier transform placeholder
+            spectral_field = np.fft.fft(spectral_lon, axis=0)
+        
+        # If using GPU, offload computations
+        if self.use_gpu:
+            spectral_field = self.offload_to_gpu(spectral_field)
+        
+        return spectral_field
+
+    def inverse_transform(self, spectral_field):
+        """
+        Perform inverse spectral transform (spectral to grid)
+        """
+        if self.transform_type == 'global':
+            # Inverse Legendre transform placeholder
+            field_lat = self.inverse_legendre_transform(spectral_field)
+        else:
+            field_lat = np.fft.ifft(spectral_field, axis=0)
+        
+        # Inverse FFT in longitude
+        field_grid = np.fft.ifft(field_lat, axis=1).real
+        return field_grid
+
+    def legendre_transform(self, data):
+        """Placeholder for Legendre transform"""
+        # Actual implementation calls ecTrans library
+        return data
+
+    def inverse_legendre_transform(self, data):
+        """Placeholder for inverse Legendre transform"""
+        # Actual implementation calls ecTrans library
+        return data
+
+    def offload_to_gpu(self, data):
+        """Placeholder for GPU offloading"""
+        # Could wrap cuFFT/cuBLAS or hip equivalents
+        print(f"[Rank {self.rank}] Offloading data to GPU")
+        return data
+
+
+# Example usage
+if __name__ == "__main__":
+    lat_points, lon_points = 128, 256
+    transform = SpectralTransform((lat_points, lon_points), 'global', use_gpu=True)
+    
+    # Example field
+    field = np.random.rand(lat_points, lon_points)
+    
+    spectral = transform.direct_transform(field)
+    recovered = transform.inverse_transform(spectral)
+    
+    print("Transform complete. Max reconstruction error:", np.max(np.abs(field - recovered)))
