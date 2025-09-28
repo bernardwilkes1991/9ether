@@ -1,0 +1,303 @@
+---
+import MainLayout from "~/layouts/main.astro"
+import { getLanguagePaths } from "~/utils/langs"
+
+export function getStaticPaths() {
+  return getLanguagePaths()
+}
+
+const lang = Astro.params.lang as string
+---
+
+<MainLayout title={lang === "zh" ? "每日日记" : "Daily Journal"} description={lang === "zh" ? "记录您的思考、反思和成长历程" : "Document your thoughts, reflections, and personal growth"}>
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8 text-center">
+      {lang === "zh" ? "📔 每日日记" : "📔 Daily Journal"}
+    </h1>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Main Journal Entry Area -->
+      <div class="lg:col-span-2">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-semibold">
+              {lang === "zh" ? "今日感想" : "Today's Entry"}
+            </h2>
+            <div class="text-sm text-gray-500" id="current-date"></div>
+          </div>
+          
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">
+              {lang === "zh" ? "心情指数" : "Mood Rating"}
+            </label>
+            <div class="flex space-x-2" id="mood-selector">
+              <button onclick="selectMood(1)" class="mood-btn text-2xl p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700" data-mood="1">😢</button>
+              <button onclick="selectMood(2)" class="mood-btn text-2xl p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700" data-mood="2">😟</button>
+              <button onclick="selectMood(3)" class="mood-btn text-2xl p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700" data-mood="3">😐</button>
+              <button onclick="selectMood(4)" class="mood-btn text-2xl p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700" data-mood="4">😊</button>
+              <button onclick="selectMood(5)" class="mood-btn text-2xl p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700" data-mood="5">😄</button>
+            </div>
+          </div>
+          
+          <div class="mb-4">
+            <label for="journal-entry" class="block text-sm font-medium mb-2">
+              {lang === "zh" ? "今天发生了什么？您有什么感悟？" : "What happened today? What are your thoughts?"}
+            </label>
+            <textarea 
+              id="journal-entry"
+              rows="10"
+              class="w-full p-3 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder={lang === "zh" ? "分享您今天的经历、学习、感悟或任何想要记录的内容..." : "Share your experiences, learnings, insights, or anything you'd like to document today..."}
+            ></textarea>
+          </div>
+          
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">
+              {lang === "zh" ? "今日标签" : "Today's Tags"}
+            </label>
+            <div class="flex flex-wrap gap-2 mb-2" id="selected-tags">
+              <!-- Selected tags will appear here -->
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button onclick="toggleTag('learning')" class="tag-btn px-3 py-1 text-sm border rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                {lang === "zh" ? "学习" : "Learning"}
+              </button>
+              <button onclick="toggleTag('work')" class="tag-btn px-3 py-1 text-sm border rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                {lang === "zh" ? "工作" : "Work"}
+              </button>
+              <button onclick="toggleTag('family')" class="tag-btn px-3 py-1 text-sm border rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                {lang === "zh" ? "家庭" : "Family"}
+              </button>
+              <button onclick="toggleTag('creativity')" class="tag-btn px-3 py-1 text-sm border rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                {lang === "zh" ? "创造力" : "Creativity"}
+              </button>
+              <button onclick="toggleTag('science')" class="tag-btn px-3 py-1 text-sm border rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                {lang === "zh" ? "科学" : "Science"}
+              </button>
+              <button onclick="toggleTag('music')" class="tag-btn px-3 py-1 text-sm border rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                {lang === "zh" ? "音乐" : "Music"}
+              </button>
+            </div>
+          </div>
+          
+          <div class="flex space-x-3">
+            <button 
+              onclick="saveEntry()"
+              class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+            >
+              {lang === "zh" ? "保存条目" : "Save Entry"}
+            </button>
+            <button 
+              onclick="clearForm()"
+              class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+            >
+              {lang === "zh" ? "清空" : "Clear"}
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sidebar -->
+      <div class="space-y-6">
+        <!-- Recent Entries -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+          <h3 class="text-lg font-semibold mb-4">
+            {lang === "zh" ? "最近条目" : "Recent Entries"}
+          </h3>
+          <div id="recent-entries" class="space-y-3">
+            <p class="text-gray-500 text-sm">
+              {lang === "zh" ? "暂无条目。开始写下您的第一个想法吧！" : "No entries yet. Start by writing your first thoughts!"}
+            </p>
+          </div>
+        </div>
+        
+        <!-- Inspirational Quote -->
+        <div class="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg shadow-lg p-6">
+          <h3 class="text-lg font-semibold mb-4">
+            {lang === "zh" ? "每日启发" : "Daily Inspiration"}
+          </h3>
+          <blockquote class="text-sm italic text-gray-700 dark:text-gray-300" id="daily-quote">
+            {lang === "zh" 
+              ? "\"探索人性的深度，理解宇宙的奥秘，在科学与艺术的交融中寻找真理。\" - Bernard Denzil Wilkes" 
+              : "\"In exploring the depths of humanity and understanding the mysteries of the universe, we find truth in the convergence of science and art.\" - Bernard Denzil Wilkes"
+            }
+          </blockquote>
+        </div>
+        
+        <!-- Reflection Prompts -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+          <h3 class="text-lg font-semibold mb-4">
+            {lang === "zh" ? "反思提示" : "Reflection Prompts"}
+          </h3>
+          <div class="space-y-2 text-sm" id="reflection-prompts">
+            <!-- Prompts will be populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</MainLayout>
+
+<script>
+  let selectedMood = null;
+  let selectedTags = new Set();
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    // Set current date
+    const today = new Date();
+    document.getElementById('current-date').textContent = today.toLocaleDateString();
+    
+    // Load reflection prompts
+    loadReflectionPrompts();
+    
+    // Load recent entries
+    loadRecentEntries();
+  });
+  
+  function selectMood(mood) {
+    // Remove previous selection
+    document.querySelectorAll('.mood-btn').forEach(btn => {
+      btn.classList.remove('bg-blue-500', 'text-white');
+    });
+    
+    // Add selection to clicked button
+    const selectedBtn = document.querySelector(`[data-mood="${mood}"]`);
+    selectedBtn.classList.add('bg-blue-500', 'text-white');
+    selectedMood = mood;
+  }
+  
+  function toggleTag(tag) {
+    const tagBtn = event.target;
+    const selectedTagsContainer = document.getElementById('selected-tags');
+    
+    if (selectedTags.has(tag)) {
+      // Remove tag
+      selectedTags.delete(tag);
+      tagBtn.classList.remove('bg-blue-500', 'text-white');
+      // Remove from selected tags display
+      const tagElement = document.querySelector(`#selected-tags [data-tag="${tag}"]`);
+      if (tagElement) tagElement.remove();
+    } else {
+      // Add tag
+      selectedTags.add(tag);
+      tagBtn.classList.add('bg-blue-500', 'text-white');
+      // Add to selected tags display
+      const tagElement = document.createElement('span');
+      tagElement.className = 'px-3 py-1 text-sm bg-blue-500 text-white rounded-full';
+      tagElement.setAttribute('data-tag', tag);
+      tagElement.textContent = tagBtn.textContent;
+      selectedTagsContainer.appendChild(tagElement);
+    }
+  }
+  
+  function saveEntry() {
+    const entry = document.getElementById('journal-entry').value.trim();
+    if (!entry) {
+      alert(document.documentElement.lang === 'zh' ? '请写下一些内容' : 'Please write something');
+      return;
+    }
+    
+    const journalEntry = {
+      date: new Date().toISOString(),
+      mood: selectedMood,
+      content: entry,
+      tags: Array.from(selectedTags)
+    };
+    
+    // Save to localStorage (in a real app, this would save to a server)
+    const existingEntries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+    existingEntries.unshift(journalEntry);
+    localStorage.setItem('journalEntries', JSON.stringify(existingEntries));
+    
+    // Show success message
+    alert(document.documentElement.lang === 'zh' ? '条目已保存！' : 'Entry saved!');
+    
+    // Clear form
+    clearForm();
+    
+    // Reload recent entries
+    loadRecentEntries();
+  }
+  
+  function clearForm() {
+    document.getElementById('journal-entry').value = '';
+    selectedMood = null;
+    selectedTags.clear();
+    
+    // Clear UI selections
+    document.querySelectorAll('.mood-btn').forEach(btn => {
+      btn.classList.remove('bg-blue-500', 'text-white');
+    });
+    
+    document.querySelectorAll('.tag-btn').forEach(btn => {
+      btn.classList.remove('bg-blue-500', 'text-white');
+    });
+    
+    document.getElementById('selected-tags').innerHTML = '';
+  }
+  
+  function loadRecentEntries() {
+    const entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+    const container = document.getElementById('recent-entries');
+    
+    if (entries.length === 0) {
+      container.innerHTML = `<p class="text-gray-500 text-sm">${
+        document.documentElement.lang === 'zh' 
+          ? '暂无条目。开始写下您的第一个想法吧！' 
+          : 'No entries yet. Start by writing your first thoughts!'
+      }</p>`;
+      return;
+    }
+    
+    container.innerHTML = entries.slice(0, 5).map(entry => {
+      const date = new Date(entry.date).toLocaleDateString();
+      const preview = entry.content.substring(0, 60) + (entry.content.length > 60 ? '...' : '');
+      const moodEmoji = ['', '😢', '😟', '😐', '😊', '😄'][entry.mood] || '';
+      
+      return `
+        <div class="border-l-4 border-blue-500 pl-3 py-2">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs text-gray-500">${date}</span>
+            <span class="text-sm">${moodEmoji}</span>
+          </div>
+          <p class="text-sm text-gray-700 dark:text-gray-300">${preview}</p>
+        </div>
+      `;
+    }).join('');
+  }
+  
+  function loadReflectionPrompts() {
+    const prompts = {
+      en: [
+        "What did I learn about myself today?",
+        "How did I grow or challenge myself?",
+        "What am I most grateful for right now?",
+        "What patterns am I noticing in my thoughts?",
+        "How did I contribute to others' wellbeing today?"
+      ],
+      zh: [
+        "今天我对自己有什么新的认识？",
+        "我是如何成长或挑战自己的？",
+        "现在我最感激什么？",
+        "我在自己的思维中注意到了什么模式？",
+        "今天我是如何为他人的福祉做出贡献的？"
+      ]
+    };
+    
+    const lang = document.documentElement.lang || 'en';
+    const container = document.getElementById('reflection-prompts');
+    const langPrompts = prompts[lang] || prompts.en;
+    
+    container.innerHTML = langPrompts.map(prompt => 
+      `<div class="cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors" onclick="usePrompt('${prompt}')">${prompt}</div>`
+    ).join('');
+  }
+  
+  function usePrompt(prompt) {
+    const textarea = document.getElementById('journal-entry');
+    if (textarea.value.trim() === '') {
+      textarea.value = prompt + '\n\n';
+      textarea.focus();
+    }
+  }
+</script>

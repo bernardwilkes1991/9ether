@@ -1,0 +1,349 @@
+---
+import MainLayout from "~/layouts/main.astro"
+import { getLanguagePaths } from "~/utils/langs"
+
+export function getStaticPaths() {
+  return getLanguagePaths()
+}
+
+const lang = Astro.params.lang as string
+---
+
+<MainLayout title={lang === "zh" ? "科学探索" : "Science Exploration"} description={lang === "zh" ? "探索量子物理、认知心理学和宇宙奥秘" : "Explore quantum physics, cognitive psychology, and the mysteries of the universe"}>
+  <div class="max-w-6xl mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8 text-center">
+      {lang === "zh" ? "🔬 科学探索中心" : "🔬 Science Exploration Center"}
+    </h1>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Main Content -->
+      <div class="lg:col-span-2 space-y-8">
+        <!-- Quantum Physics Section -->
+        <div class="bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-lg shadow-lg p-6">
+          <h2 class="text-2xl font-bold mb-4 flex items-center">
+            🌌 {lang === "zh" ? "量子物理学" : "Quantum Physics"}
+          </h2>
+          <p class="text-gray-700 dark:text-gray-300 mb-6">
+            {lang === "zh" 
+              ? "探索量子力学的奇妙世界，理解现实的本质和宇宙的基本规律。"
+              : "Explore the fascinating world of quantum mechanics and understand the nature of reality and fundamental laws of the universe."
+            }
+          </p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg">
+              <h3 class="font-semibold mb-2">{lang === "zh" ? "量子纠缠" : "Quantum Entanglement"}</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                {lang === "zh" 
+                  ? "当两个粒子处于纠缠状态时，对其中一个粒子的测量会立即影响另一个粒子，无论它们之间的距离有多远。"
+                  : "When two particles are entangled, measuring one particle instantly affects the other, regardless of the distance between them."
+                }
+              </p>
+              <button onclick="exploreQuantumConcept('entanglement')" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                {lang === "zh" ? "深入探索 →" : "Explore Further →"}
+              </button>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg">
+              <h3 class="font-semibold mb-2">{lang === "zh" ? "不确定性原理" : "Uncertainty Principle"}</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                {lang === "zh" 
+                  ? "海森堡不确定性原理表明，我们不能同时精确地知道一个粒子的位置和动量。"
+                  : "Heisenberg's uncertainty principle states that we cannot simultaneously know both the position and momentum of a particle with perfect precision."
+                }
+              </p>
+              <button onclick="exploreQuantumConcept('uncertainty')" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                {lang === "zh" ? "深入探索 →" : "Explore Further →"}
+              </button>
+            </div>
+          </div>
+          
+          <div class="bg-white dark:bg-gray-800 p-4 rounded-lg">
+            <h3 class="font-semibold mb-2">{lang === "zh" ? "量子模拟器" : "Quantum Simulator"}</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+              {lang === "zh" 
+                ? "体验量子现象的交互式可视化模拟。"
+                : "Experience interactive visualizations of quantum phenomena."
+              }
+            </p>
+            <div class="grid grid-cols-3 gap-2 mb-4">
+              <button onclick="runQuantumSimulation('double-slit')" class="bg-blue-500 hover:bg-blue-600 text-white text-xs px-3 py-2 rounded">
+                {lang === "zh" ? "双缝实验" : "Double Slit"}
+              </button>
+              <button onclick="runQuantumSimulation('wave-collapse')" class="bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-2 rounded">
+                {lang === "zh" ? "波函数坍缩" : "Wave Collapse"}
+              </button>
+              <button onclick="runQuantumSimulation('superposition')" class="bg-purple-500 hover:bg-purple-600 text-white text-xs px-3 py-2 rounded">
+                {lang === "zh" ? "叠加态" : "Superposition"}
+              </button>
+            </div>
+            <div id="quantum-sim-output" class="bg-gray-100 dark:bg-gray-700 p-3 rounded text-sm min-h-[100px] flex items-center justify-center text-gray-500">
+              {lang === "zh" ? "选择一个实验开始模拟" : "Select an experiment to start simulation"}
+            </div>
+          </div>
+        </div>
+        
+        <!-- Cognitive Psychology Section -->
+        <div class="bg-gradient-to-br from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 rounded-lg shadow-lg p-6">
+          <h2 class="text-2xl font-bold mb-4 flex items-center">
+            🧠 {lang === "zh" ? "认知心理学" : "Cognitive Psychology"}
+          </h2>
+          <p class="text-gray-700 dark:text-gray-300 mb-6">
+            {lang === "zh" 
+              ? "深入了解人类思维的工作机制，探索意识、学习和行为背后的科学。"
+              : "Dive deep into how the human mind works, exploring the science behind consciousness, learning, and behavior."
+            }
+          </p>
+          
+          <div class="space-y-4">
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg">
+              <h3 class="font-semibold mb-2">{lang === "zh" ? "意识的本质" : "The Nature of Consciousness"}</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                {lang === "zh" 
+                  ? "意识是如何从大脑活动中产生的？这是科学中最深刻的问题之一。"
+                  : "How does consciousness arise from brain activity? This is one of the most profound questions in science."
+                }
+              </p>
+              <div class="flex space-x-2">
+                <button onclick="explorePsychConcept('consciousness')" class="bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded">
+                  {lang === "zh" ? "探索" : "Explore"}
+                </button>
+                <button onclick="showPsychExperiment('consciousness')" class="bg-blue-500 hover:bg-blue-600 text-white text-xs px-3 py-1 rounded">
+                  {lang === "zh" ? "相关实验" : "Related Experiments"}
+                </button>
+              </div>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg">
+              <h3 class="font-semibold mb-2">{lang === "zh" ? "社会认知" : "Social Cognition"}</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                {lang === "zh" 
+                  ? "我们如何理解他人的思想和情感？社会认知研究人类的社交智能。"
+                  : "How do we understand others' thoughts and emotions? Social cognition studies human social intelligence."
+                }
+              </p>
+              <div class="flex space-x-2">
+                <button onclick="explorePsychConcept('social-cognition')" class="bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded">
+                  {lang === "zh" ? "探索" : "Explore"}
+                </button>
+                <button onclick="showPsychExperiment('social-cognition')" class="bg-blue-500 hover:bg-blue-600 text-white text-xs px-3 py-1 rounded">
+                  {lang === "zh" ? "相关实验" : "Related Experiments"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Interactive Learning Section -->
+        <div class="bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 rounded-lg shadow-lg p-6">
+          <h2 class="text-2xl font-bold mb-4 flex items-center">
+            🎓 {lang === "zh" ? "互动学习" : "Interactive Learning"}
+          </h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg">
+              <h3 class="font-semibold mb-2">{lang === "zh" ? "思维实验" : "Thought Experiments"}</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                {lang === "zh" 
+                  ? "通过著名的思维实验探索复杂的科学概念。"
+                  : "Explore complex scientific concepts through famous thought experiments."
+                }
+              </p>
+              <button onclick="startThoughtExperiment()" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded text-sm">
+                {lang === "zh" ? "开始实验" : "Start Experiment"}
+              </button>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg">
+              <h3 class="font-semibold mb-2">{lang === "zh" ? "科学问答" : "Science Q&A"}</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                {lang === "zh" 
+                  ? "测试您对科学概念的理解。"
+                  : "Test your understanding of scientific concepts."
+                }
+              </p>
+              <button onclick="startScienceQuiz()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded text-sm">
+                {lang === "zh" ? "开始问答" : "Start Quiz"}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sidebar -->
+      <div class="space-y-6">
+        <!-- Bernard's Insights -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+          <h3 class="text-lg font-semibold mb-4">
+            {lang === "zh" ? "伯纳德的洞察" : "Bernard's Insights"}
+          </h3>
+          <div class="space-y-4 text-sm">
+            <blockquote class="italic text-gray-700 dark:text-gray-300 border-l-4 border-blue-500 pl-3">
+              {lang === "zh" 
+                ? "\"量子力学告诉我们，观察者和被观察者之间存在着深刻的联系。这不仅是物理学的洞察，也是理解人类意识的关键。\""
+                : "\"Quantum mechanics reveals a profound connection between the observer and the observed. This is not just a physics insight, but key to understanding human consciousness.\""
+              }
+            </blockquote>
+            <div class="text-xs text-gray-500">- Bernard Denzil Wilkes</div>
+          </div>
+        </div>
+        
+        <!-- Recent Discoveries -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+          <h3 class="text-lg font-semibold mb-4">
+            {lang === "zh" ? "最新发现" : "Recent Discoveries"}
+          </h3>
+          <div class="space-y-3 text-sm">
+            <div class="border-l-4 border-green-500 pl-3">
+              <div class="font-medium">{lang === "zh" ? "量子计算突破" : "Quantum Computing Breakthrough"}</div>
+              <div class="text-gray-600 dark:text-gray-400 text-xs">
+                {lang === "zh" ? "新的量子纠错技术" : "New quantum error correction techniques"}
+              </div>
+            </div>
+            <div class="border-l-4 border-blue-500 pl-3">
+              <div class="font-medium">{lang === "zh" ? "神经科学进展" : "Neuroscience Advances"}</div>
+              <div class="text-gray-600 dark:text-gray-400 text-xs">
+                {lang === "zh" ? "大脑连接组的新映射" : "New brain connectome mapping"}
+              </div>
+            </div>
+            <div class="border-l-4 border-purple-500 pl-3">
+              <div class="font-medium">{lang === "zh" ? "意识研究" : "Consciousness Research"}</div>
+              <div class="text-gray-600 dark:text-gray-400 text-xs">
+                {lang === "zh" ? "整合信息理论的新发展" : "New developments in integrated information theory"}
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Learning Resources -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+          <h3 class="text-lg font-semibold mb-4">
+            {lang === "zh" ? "学习资源" : "Learning Resources"}
+          </h3>
+          <div class="space-y-2 text-sm">
+            <a href="#" class="block hover:text-blue-600 dark:hover:text-blue-400">
+              📚 {lang === "zh" ? "推荐书籍" : "Recommended Books"}
+            </a>
+            <a href="#" class="block hover:text-blue-600 dark:hover:text-blue-400">
+              🎥 {lang === "zh" ? "教育视频" : "Educational Videos"}
+            </a>
+            <a href="#" class="block hover:text-blue-600 dark:hover:text-blue-400">
+              📄 {lang === "zh" ? "研究论文" : "Research Papers"}
+            </a>
+            <a href="#" class="block hover:text-blue-600 dark:hover:text-blue-400">
+              🧪 {lang === "zh" ? "虚拟实验室" : "Virtual Labs"}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</MainLayout>
+
+<script>
+  let currentSimulation = null;
+  
+  function exploreQuantumConcept(concept) {
+    const explanations = {
+      entanglement: {
+        en: "Quantum entanglement is a phenomenon where particles become connected in such a way that measuring one instantly affects the other, regardless of distance. Einstein called it 'spooky action at a distance.'",
+        zh: "量子纠缠是一种现象，粒子以这样的方式连接：测量其中一个会立即影响另一个，无论距离如何。爱因斯坦称之为'幽灵般的超距作用'。"
+      },
+      uncertainty: {
+        en: "The uncertainty principle, formulated by Werner Heisenberg, states that the more precisely we know a particle's position, the less precisely we can know its momentum, and vice versa.",
+        zh: "由维尔纳·海森堡表述的不确定性原理指出，我们越精确地知道粒子的位置，就越不能精确地知道它的动量，反之亦然。"
+      }
+    };
+    
+    const lang = document.documentElement.lang || 'en';
+    const explanation = explanations[concept][lang] || explanations[concept].en;
+    
+    alert(explanation);
+  }
+  
+  function runQuantumSimulation(type) {
+    const output = document.getElementById('quantum-sim-output');
+    const lang = document.documentElement.lang || 'en';
+    
+    const simulations = {
+      'double-slit': {
+        en: "🌊 Double Slit Experiment Running...\n\nParticles fired: 1000\nInterference pattern detected!\nWave-particle duality confirmed.\n\n📊 Results show both wave and particle behavior depending on observation.",
+        zh: "🌊 双缝实验运行中...\n\n发射粒子：1000个\n检测到干涉图案！\n波粒二象性得到确认。\n\n📊 结果显示波和粒子行为取决于观察。"
+      },
+      'wave-collapse': {
+        en: "⚡ Wave Function Collapse Simulation...\n\nSuperposition state: |ψ⟩ = α|0⟩ + β|1⟩\nMeasurement applied...\nCollapse to definite state!\n\n🎯 Probability of measurement outcome: 73%",
+        zh: "⚡ 波函数坍缩模拟...\n\n叠加态：|ψ⟩ = α|0⟩ + β|1⟩\n应用测量...\n坍缩到确定状态！\n\n🎯 测量结果概率：73%"
+      },
+      'superposition': {
+        en: "🔄 Superposition Visualization...\n\nQuantum state: |ψ⟩ = (|↑⟩ + |↓⟩)/√2\nParticle exists in multiple states simultaneously\nSchrödinger's cat is both alive AND dead\n\n🐱 Until observed!",
+        zh: "🔄 叠加态可视化...\n\n量子态：|ψ⟩ = (|↑⟩ + |↓⟩)/√2\n粒子同时存在于多个状态\n薛定谔的猫既活着又死了\n\n🐱 直到被观察！"
+      }
+    };
+    
+    output.innerHTML = `<pre class="whitespace-pre-wrap text-left">${simulations[type][lang]}</pre>`;
+    output.classList.remove('flex', 'items-center', 'justify-center');
+    output.classList.add('text-left');
+  }
+  
+  function explorePsychConcept(concept) {
+    const explanations = {
+      consciousness: {
+        en: "Consciousness remains one of the hardest problems in science. How does subjective experience arise from objective neural activity? Various theories include Global Workspace Theory, Integrated Information Theory, and Higher-Order Thought theories.",
+        zh: "意识仍然是科学中最难的问题之一。主观体验如何从客观的神经活动中产生？各种理论包括全局工作空间理论、整合信息理论和高阶思维理论。"
+      },
+      'social-cognition': {
+        en: "Social cognition involves understanding others' mental states - their beliefs, desires, and intentions. This includes theory of mind, empathy, and social reasoning. Mirror neurons play a crucial role in this process.",
+        zh: "社会认知涉及理解他人的心理状态——他们的信念、欲望和意图。这包括心理理论、同理心和社会推理。镜像神经元在这个过程中起着关键作用。"
+      }
+    };
+    
+    const lang = document.documentElement.lang || 'en';
+    const explanation = explanations[concept][lang] || explanations[concept].en;
+    
+    alert(explanation);
+  }
+  
+  function showPsychExperiment(concept) {
+    const experiments = {
+      consciousness: {
+        en: "Famous experiments: Libet's experiments on free will, Blindsight studies, Split-brain research by Sperry, Global Workspace experiments by Baars.",
+        zh: "著名实验：李贝特关于自由意志的实验、盲视研究、斯佩里的裂脑研究、巴尔斯的全局工作空间实验。"
+      },
+      'social-cognition': {
+        en: "Key studies: False-belief tasks (Sally-Anne test), Empathy experiments, Mirror neuron discoveries by Rizzolatti, Social brain network studies.",
+        zh: "关键研究：错误信念任务（莎莉-安妮测试）、同理心实验、里佐拉蒂的镜像神经元发现、社会大脑网络研究。"
+      }
+    };
+    
+    const lang = document.documentElement.lang || 'en';
+    const experiment = experiments[concept][lang] || experiments[concept].en;
+    
+    alert(experiment);
+  }
+  
+  function startThoughtExperiment() {
+    const experiments = {
+      en: "🤔 Thought Experiment: Schrödinger's Cat\n\nImagine a cat in a sealed box with a quantum device that has a 50% chance of releasing poison. According to quantum mechanics, until observed, the cat exists in a superposition of being both alive and dead.\n\nWhat does this tell us about the nature of reality and observation?",
+      zh: "🤔 思维实验：薛定谔的猫\n\n想象一只猫被封在一个盒子里，里面有一个量子装置，有50%的几率释放毒药。根据量子力学，在被观察之前，猫存在于既活着又死了的叠加态中。\n\n这告诉我们现实和观察的本质是什么？"
+    };
+    
+    const lang = document.documentElement.lang || 'en';
+    alert(experiments[lang]);
+  }
+  
+  function startScienceQuiz() {
+    const questions = {
+      en: "🧠 Science Quiz Question 1:\n\nWhat is the fundamental principle that states you cannot simultaneously know both the exact position and momentum of a particle?\n\nA) Pauli Exclusion Principle\nB) Heisenberg Uncertainty Principle\nC) Einstein's Relativity\nD) Schrödinger's Equation",
+      zh: "🧠 科学问答题 1：\n\n什么基本原理表明你不能同时知道粒子的确切位置和动量？\n\nA) 泡利不相容原理\nB) 海森堡不确定性原理\nC) 爱因斯坦相对论\nD) 薛定谔方程"
+    };
+    
+    const lang = document.documentElement.lang || 'en';
+    const answer = prompt(questions[lang]);
+    
+    if (answer && answer.toLowerCase() === 'b') {
+      alert(lang === 'zh' ? '正确！🎉' : 'Correct! 🎉');
+    } else {
+      alert(lang === 'zh' ? '答案是B - 海森堡不确定性原理' : 'The answer is B - Heisenberg Uncertainty Principle');
+    }
+  }
+</script>
