@@ -1,3 +1,22 @@
+## Quickstart
+
+Prerequisites: Node.js 18.17+ (recommended: Node 20+). Check with `node -v`.
+
+- Install: `npm install`
+- Dev server: `npm run dev` → http://localhost:4321
+- Build: `npm run build` (runs `astro check && astro build`)
+- Preview: `npm run preview`
+- Output: `dist/`
+
+## Deployment (GitHub Pages)
+
+This repo is configured to deploy to GitHub Pages as a project site at `/9ether`.
+
+- On push to `main`, GitHub Actions builds and deploys automatically.
+- Site URL: https://bernardwilkes1991.github.io/9ether
+
+If you fork or rename the repo, update `site` and `base` in `astro.config.ts` to match your Pages URL and path.
+
 # Ether: The Ultimate Artificial Intelligence Application
 
 ## Introduction
